@@ -31,5 +31,3 @@ class Transaction(models.Model):
         ordering = ['date']
         verbose_name = 'transaction'
         verbose_name_plural = 'transactions'
-
-

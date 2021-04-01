@@ -22,6 +22,3 @@ class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model = Transaction
-
-
-

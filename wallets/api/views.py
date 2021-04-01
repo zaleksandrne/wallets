@@ -1,10 +1,9 @@
 from django.db.models.aggregates import Sum
-import django_filters
 from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import filters, mixins, viewsets
+from rest_framework import mixins, viewsets
 from rest_framework.permissions import AllowAny, SAFE_METHODS
 from .models import Transaction, Wallet
-from .serializers import (WalletSerializerRead, WalletSerializerWrite, 
+from .serializers import (WalletSerializerRead, WalletSerializerWrite,
                           TransactionSerializer)
 
 
@@ -32,4 +31,4 @@ class TransactionViewSet(BaseViewSet):
     serializer_class = TransactionSerializer
     permission_classes = [AllowAny, ]
     filter_backends = [DjangoFilterBackend]
-    filterset_fields = ['wallet', ] 
+    filterset_fields = ['wallet', ]
