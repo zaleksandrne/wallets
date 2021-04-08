@@ -5,8 +5,9 @@ from .views import WalletViewSet, TransactionViewSet
 
 router = DefaultRouter()
 
-router.register('transactions', TransactionViewSet)
+#router.register('transactions', TransactionViewSet)
 router.register('wallets', WalletViewSet)
+router.register(r'wallets/(?P<id>\d+)/transactions', TransactionViewSet, basename = 'transactions')
 urlpatterns = [
     path('', include(router.urls)),
 ]
