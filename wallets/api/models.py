@@ -12,6 +12,9 @@ class Wallet(models.Model):
         verbose_name = 'Wallet'
         verbose_name_plural = 'Wallets'
 
+    def __str__(self):
+        return self.name
+
 
 class Transaction(models.Model):
     value = models.FloatField(max_length=200,
@@ -29,5 +32,8 @@ class Transaction(models.Model):
 
     class Meta:
         ordering = ['date']
-        verbose_name = 'transaction'
-        verbose_name_plural = 'transactions'
+        verbose_name = 'Transaction'
+        verbose_name_plural = 'Transactions'
+
+    def __str__(self):
+        return str(self.value)
