@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Wallet, Transaction
+from .models import Exchange, Wallet, Transaction
 
 
 class WalletSerializerRead(serializers.ModelSerializer):
@@ -16,11 +16,11 @@ class WalletSerializerWrite(serializers.ModelSerializer):
         choices = Wallet.CHOICES,
         error_messages={
             'invalid_choice': f'Not a valid choice. Value must be '
-                              f'in {*[ x[0] for x in Wallet.CHOICES],}'
+                              f'in {*( x[0] for x in Wallet.CHOICES),}'
                               })
     class Meta:
         fields = '__all__'
-        model = Wallet
+        model = Wallet  
   
 
 class TransactionSerializer(serializers.ModelSerializer):
@@ -28,3 +28,9 @@ class TransactionSerializer(serializers.ModelSerializer):
     class Meta:
         fields = '__all__'
         model = Transaction
+
+class ExchangeSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        fields = '__all__'
+        model = Exchange

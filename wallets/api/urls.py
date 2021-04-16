@@ -5,7 +5,7 @@ from rest_framework.routers import DefaultRouter
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from .views import WalletViewSet, TransactionViewSet
+from .views import ExchangeViewSet, WalletViewSet, TransactionViewSet
 
 router = DefaultRouter()
 
@@ -14,6 +14,10 @@ router.register(r'wallets/(?P<id>\d+)/transactions',
                 TransactionViewSet,
                 basename='transactions'
                 )
+router.register(r'wallets/(?P<id>\d+)/exchanges',
+                ExchangeViewSet,
+                basename='exchanges'
+                )                
 schema_view = get_schema_view(
    openapi.Info(
       title="Snippets API",

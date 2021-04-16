@@ -11,6 +11,7 @@ class Wallet(models.Model):
         max_length=3,
         choices = CHOICES,
         )
+
     class Meta:
         ordering = ['name']
         verbose_name = 'Wallet'
@@ -22,7 +23,7 @@ class Wallet(models.Model):
 
 class Transaction(models.Model):
     value = models.FloatField(max_length=200,
-                              verbose_name='value(rub)')
+                              verbose_name='Value')
     wallet = models.ForeignKey(Wallet,
                                on_delete=models.CASCADE,
                                related_name='transactions',
@@ -41,3 +42,17 @@ class Transaction(models.Model):
 
     def __str__(self):
         return str(self.value)
+
+class Exchange(models.Model):
+    value = models.FloatField(max_length=200,
+                              verbose_name='Value')
+    sender = models.ForeignKey(Wallet,
+                               on_delete=models.CASCADE,
+                               related_name='exchanges_sent',
+                               verbose_name='Sender'
+                               )
+    recipient = models.ForeignKey(Wallet,
+                               on_delete=models.CASCADE,
+                               related_name='exchanges_taken',
+                               verbose_name='Recipient'
+                               )
