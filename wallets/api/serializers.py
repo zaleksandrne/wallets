@@ -12,10 +12,16 @@ class WalletSerializerRead(serializers.ModelSerializer):
 
 
 class WalletSerializerWrite(serializers.ModelSerializer):
+    currency = serializers.ChoiceField(
+        choices = Wallet.CHOICES,
+        error_messages={
+            'invalid_choice': f'Not a valid choice. Value must be '
+                              f'in {*[ x[0] for x in Wallet.CHOICES],}'
+                              })
     class Meta:
         fields = '__all__'
         model = Wallet
-
+  
 
 class TransactionSerializer(serializers.ModelSerializer):
 

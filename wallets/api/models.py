@@ -2,11 +2,15 @@ from django.db import models
 
 
 class Wallet(models.Model):
+    CHOICES = (('rub', 'rub'), ('usd', 'usd'), ('eur', ' eur'))
     name = models.CharField(max_length=200,
                             verbose_name='Wallet name',
                             unique=True,
                             )
-
+    currency = models.CharField(
+        max_length=3,
+        choices = CHOICES,
+        )
     class Meta:
         ordering = ['name']
         verbose_name = 'Wallet'
