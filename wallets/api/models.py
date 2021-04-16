@@ -48,11 +48,11 @@ class Exchange(models.Model):
                               verbose_name='Value')
     sender = models.ForeignKey(Wallet,
                                on_delete=models.CASCADE,
-                               related_name='exchanges_sent',
+                               related_name='sent',
                                verbose_name='Sender'
                                )
     recipient = models.ForeignKey(Wallet,
-                               on_delete=models.CASCADE,
-                               related_name='exchanges_taken',
-                               verbose_name='Recipient'
-                               )
+                                  on_delete=models.CASCADE,
+                                  related_name='taken',
+                                  verbose_name='Recipient'
+                                  )

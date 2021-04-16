@@ -3,7 +3,7 @@ from django.db.models.aggregates import Sum
 from django.shortcuts import get_object_or_404
 from rest_framework import mixins, viewsets
 from rest_framework.permissions import AllowAny, SAFE_METHODS
-from .models import Wallet
+from .models import Exchange, Wallet
 from .serializers import (ExchangeSerializer, TransactionSerializer, 
                           WalletSerializerRead, WalletSerializerWrite)
 
@@ -18,7 +18,7 @@ class BaseViewSet(viewsets.GenericViewSet,
 
 
 class WalletViewSet(BaseViewSet):
-    queryset = Wallet.objects.annotate(balance= Sum(F('transactions__value')- F('exchanges_sent__value')))
+    queryset = Wallet.objects.annotate(balance= Sum('transactions__value', distinct=True) - Sum('sent__value', distinct=True))
     permission_classes = [AllowAny, ]
     def get_serializer_class(self):
         if self.request.method in SAFE_METHODS:
@@ -36,9 +36,6 @@ class TransactionViewSet(BaseViewSet):
 
 
 class ExchangeViewSet(BaseViewSet):
-    def get_queryset(self):
-        wallet = get_object_or_404(Wallet, id=self.kwargs.get('id'))
-        return wallet.exchanges_sent.all()
-
+    queryset = Exchange.objects.all()
     serializer_class = ExchangeSerializer
     permission_classes = [AllowAny, ]

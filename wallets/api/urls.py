@@ -14,7 +14,7 @@ router.register(r'wallets/(?P<id>\d+)/transactions',
                 TransactionViewSet,
                 basename='transactions'
                 )
-router.register(r'wallets/(?P<id>\d+)/exchanges',
+router.register('exchanges',
                 ExchangeViewSet,
                 basename='exchanges'
                 )                
