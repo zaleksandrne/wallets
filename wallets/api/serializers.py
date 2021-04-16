@@ -1,10 +1,21 @@
 from rest_framework import serializers
 
 from .models import Exchange, Wallet, Transaction
+from django.db.models.aggregates import Sum
 
 
 class WalletSerializerRead(serializers.ModelSerializer):
-    balance = serializers.FloatField(read_only=True)
+    balance = serializers.SerializerMethodField()
+
+    def get_balance(self, obj):
+        transactions = obj.transactions.all().aggregate(
+            Sum('value')).get('value__sum') or 0
+        exchange_sent = obj.exchange_sent.all().aggregate(
+            Sum('value')).get('value__sum') or 0
+        exchange_taken = obj.exchange_taken.all().aggregate(
+            Sum('value')).get('value__sum') or 0
+        return transactions - exchange_sent + exchange_taken
+
 
     class Meta:
         fields = '__all__'
@@ -30,7 +41,7 @@ class TransactionSerializer(serializers.ModelSerializer):
         model = Transaction
 
 class ExchangeSerializer(serializers.ModelSerializer):
-
+    converted_value = 
     class Meta:
         fields = '__all__'
         model = Exchange

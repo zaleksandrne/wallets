@@ -45,14 +45,18 @@ class Transaction(models.Model):
 
 class Exchange(models.Model):
     value = models.FloatField(max_length=200,
+                             # null=True,
+                              #blank=True,
                               verbose_name='Value')
+    converted_value = models.FloatField(max_length=200,
+                                        verbose_name='Converted value')
     sender = models.ForeignKey(Wallet,
                                on_delete=models.CASCADE,
-                               related_name='sent',
+                               related_name='exchange_sent',
                                verbose_name='Sender'
                                )
     recipient = models.ForeignKey(Wallet,
                                   on_delete=models.CASCADE,
-                                  related_name='taken',
+                                  related_name='exchange_taken',
                                   verbose_name='Recipient'
                                   )

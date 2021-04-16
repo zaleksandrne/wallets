@@ -18,7 +18,11 @@ class BaseViewSet(viewsets.GenericViewSet,
 
 
 class WalletViewSet(BaseViewSet):
-    queryset = Wallet.objects.annotate(balance= Sum('transactions__value', distinct=True) - Sum('sent__value', distinct=True))
+   # a = Wallet.objects.aggregate(
+    #    a=Sum('transactions__value', distinct=True) )
+    queryset = Wallet.objects.all()
+    
+        #- Sum('exchange_sent__value', distinct=True) + Sum('exchange_taken__value', distinct=True))
     permission_classes = [AllowAny, ]
     def get_serializer_class(self):
         if self.request.method in SAFE_METHODS:
@@ -39,3 +43,9 @@ class ExchangeViewSet(BaseViewSet):
     queryset = Exchange.objects.all()
     serializer_class = ExchangeSerializer
     permission_classes = [AllowAny, ]
+
+    def perform_create(self, serializer):
+        serializer.save(
+            author=self.request.user,
+            converted_value=serializer.value + 5
+        )
