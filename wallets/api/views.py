@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from rest_framework import mixins, viewsets
 from rest_framework.permissions import AllowAny, SAFE_METHODS
 from .models import Exchange, Wallet
-from .serializers import (ExchangeSerializer, TransactionSerializer, 
+from .serializers import (ExchangeSerializerRead, ExchangeSerializerWrite, TransactionSerializer, 
                           WalletSerializerRead, WalletSerializerWrite)
 
 
@@ -41,11 +41,8 @@ class TransactionViewSet(BaseViewSet):
 
 class ExchangeViewSet(BaseViewSet):
     queryset = Exchange.objects.all()
-    serializer_class = ExchangeSerializer
     permission_classes = [AllowAny, ]
-
-    def perform_create(self, serializer):
-        serializer.save(
-            author=self.request.user,
-            converted_value=serializer.value + 5
-        )
+    def get_serializer_class(self):
+        if self.request.method in SAFE_METHODS:
+            return ExchangeSerializerRead
+        return ExchangeSerializerWrite

@@ -49,7 +49,9 @@ class Exchange(models.Model):
                               #blank=True,
                               verbose_name='Value')
     converted_value = models.FloatField(max_length=200,
-                                        verbose_name='Converted value')
+                                        verbose_name='Converted value',
+                                        null=True,
+                                        blank=True)
     sender = models.ForeignKey(Wallet,
                                on_delete=models.CASCADE,
                                related_name='exchange_sent',
@@ -60,3 +62,5 @@ class Exchange(models.Model):
                                   related_name='exchange_taken',
                                   verbose_name='Recipient'
                                   )
+
+    
