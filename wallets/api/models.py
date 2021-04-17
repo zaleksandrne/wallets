@@ -9,7 +9,7 @@ class Wallet(models.Model):
                             )
     currency = models.CharField(
         max_length=3,
-        choices = CHOICES,
+        choices=CHOICES,
         )
 
     class Meta:
@@ -43,10 +43,9 @@ class Transaction(models.Model):
     def __str__(self):
         return str(self.value)
 
+
 class Exchange(models.Model):
     value = models.FloatField(max_length=200,
-                             # null=True,
-                              #blank=True,
                               verbose_name='Value')
     converted_value = models.FloatField(max_length=200,
                                         verbose_name='Converted value',
@@ -63,4 +62,5 @@ class Exchange(models.Model):
                                   verbose_name='Recipient'
                                   )
 
-    
+    def __str__(self):
+        return f'{str(self.sender)}-->{str(self.recipient)}'

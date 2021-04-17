@@ -17,7 +17,7 @@ router.register(r'wallets/(?P<id>\d+)/transactions',
 router.register('exchanges',
                 ExchangeViewSet,
                 basename='exchanges'
-                )                
+                )
 schema_view = get_schema_view(
    openapi.Info(
       title="Snippets API",
