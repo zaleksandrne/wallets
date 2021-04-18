@@ -128,7 +128,7 @@ dmypy.json
 # Pyre type checker
 .pyre/
 
-*migrations/
+/wallets/api/migrations/*
 !/wallets/api/migrations/__init__.py
 *.vscode/
 *.DS_Store
