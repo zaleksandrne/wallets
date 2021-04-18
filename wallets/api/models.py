@@ -7,10 +7,13 @@ class Wallet(models.Model):
                             verbose_name='Wallet name',
                             unique=True,
                             )
-    currency = models.CharField(
-        max_length=3,
-        choices=CHOICES,
-        )
+    balance = models.FloatField(max_length=200,
+                                verbose_name='Balance',
+                                null=True,
+                                blank=True)
+    currency = models.CharField(max_length=3,
+                                choices=CHOICES,
+                                )
 
     class Meta:
         ordering = ['name']
@@ -49,8 +52,7 @@ class Exchange(models.Model):
                               verbose_name='Value')
     converted_value = models.FloatField(max_length=200,
                                         verbose_name='Converted value',
-                                        null=True,
-                                        blank=True)
+                                        )
     sender = models.ForeignKey(Wallet,
                                on_delete=models.CASCADE,
                                related_name='exchange_sent',

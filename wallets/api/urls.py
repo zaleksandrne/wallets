@@ -2,14 +2,16 @@ from django.urls import include, path
 from rest_framework import permissions
 from rest_framework.routers import DefaultRouter
 
+from .views import (ExchangeViewSet, ProfileView,
+                    TransactionViewSet, WalletViewSet)
+
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 
-from .views import ExchangeViewSet, WalletViewSet, TransactionViewSet
 
 router = DefaultRouter()
 
-router.register('wallets', WalletViewSet)
+router.register('wallets', WalletViewSet, basename='wallets')
 router.register(r'wallets/(?P<id>\d+)/transactions',
                 TransactionViewSet,
                 basename='transactions'
@@ -34,6 +36,7 @@ schema_view = get_schema_view(
 
 urlpatterns = [
     path('v1/', include(router.urls)),
+    path('v1/profile/', ProfileView.as_view()),
     path('v1/redoc/',
          schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
