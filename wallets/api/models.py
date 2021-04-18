@@ -61,6 +61,12 @@ class Exchange(models.Model):
                                   related_name='exchange_taken',
                                   verbose_name='Recipient'
                                   )
+    date = models.DateTimeField(auto_now_add=True, verbose_name='Date')
+
+    class Meta:
+        ordering = ['date']
+        verbose_name = 'Exchange'
+        verbose_name_plural = 'Exchanges'
 
     def __str__(self):
         return f'{str(self.sender)}-->{str(self.recipient)}'

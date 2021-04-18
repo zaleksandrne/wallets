@@ -35,6 +35,7 @@ class WalletSerializerWrite(serializers.ModelSerializer):
 
 
 class TransactionSerializer(serializers.ModelSerializer):
+    wallet = serializers.SlugRelatedField(read_only=True, slug_field='name')
 
     class Meta:
         fields = '__all__'
@@ -42,6 +43,7 @@ class TransactionSerializer(serializers.ModelSerializer):
 
 
 class ExchangeSerializer(serializers.ModelSerializer):
+   
     converted_value = serializers.FloatField(read_only=True)
 
     class Meta:

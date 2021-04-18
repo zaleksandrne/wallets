@@ -33,12 +33,17 @@ class WalletViewSet(BaseViewSet, mixins.UpdateModelMixin):
 
 
 class TransactionViewSet(BaseViewSet):
+    serializer_class = TransactionSerializer
+    permission_classes = [AllowAny, ]
+
     def get_queryset(self):
         wallet = get_object_or_404(Wallet, id=self.kwargs.get('id'))
         return wallet.transactions.all()
-
-    serializer_class = TransactionSerializer
-    permission_classes = [AllowAny, ]
+    
+    def perform_create(self, serializer):
+        print(self.kwargs.get('wallet_id'))
+        serializer.save(
+            wallet=get_object_or_404(Wallet, id=self.kwargs.get('id')))
 
 
 class ExchangeViewSet(BaseViewSet):
