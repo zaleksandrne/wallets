@@ -46,7 +46,6 @@ class ExchangeSerializer(serializers.ModelSerializer):
 
     def validate(self, data):
         id = data.get('sender').id
-        print(id)
         wallet = get_object_or_404(Wallet, id=id)
         if wallet.balance - data.get('value') < 0:
             raise serializers.ValidationError('Balance is too low')
