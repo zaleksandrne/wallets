@@ -1,13 +1,15 @@
 import os, requests
+
 from django.shortcuts import get_object_or_404
+from django.db.models.aggregates import Sum
 from rest_framework import mixins, status, views, viewsets
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny, SAFE_METHODS
+
 from .models import Exchange, Wallet
 from .serializers import (ExchangeSerializer, TransactionSerializer,
                           WalletSerializerRead, WalletSerializerWrite,
                           ProfileSerializer)
-from django.db.models.aggregates import Sum
 
 from dotenv import load_dotenv
 
@@ -20,12 +22,13 @@ APIURL = os.getenv('APIURL')
 class BaseViewSet(viewsets.GenericViewSet,
                   mixins.CreateModelMixin,
                   mixins.ListModelMixin,
-                  mixins.DestroyModelMixin,
                   mixins.RetrieveModelMixin,):
     pass
 
 
-class WalletViewSet(BaseViewSet, mixins.UpdateModelMixin):
+class WalletViewSet(BaseViewSet,
+                    mixins.UpdateModelMixin,
+                    mixins.DestroyModelMixin):
     queryset = Wallet.objects.all()
     permission_classes = [AllowAny, ]
 

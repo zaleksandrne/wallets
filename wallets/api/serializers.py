@@ -1,3 +1,5 @@
+from django.db.models.fields import SlugField
+from django.shortcuts import get_object_or_404
 from rest_framework import serializers
 
 from .models import Exchange, Wallet, Transaction
@@ -25,9 +27,14 @@ class WalletSerializerWrite(serializers.ModelSerializer):
 
 
 class TransactionSerializer(serializers.ModelSerializer):
-    wallet_name = serializers.SlugRelatedField(read_only=True,
-                                               slug_field='name'
-                                               )
+    wallet = serializers.SlugRelatedField(read_only=True, slug_field='id')
+
+    def validate(self, data):
+        id = self.context.get('view').kwargs.get('id')
+        wallet = get_object_or_404(Wallet, id=id)
+        if wallet.balance + data.get('value') < 0:
+            raise serializers.ValidationError('Balance is too low')
+        return data
 
     class Meta:
         fields = '__all__'
@@ -36,6 +43,14 @@ class TransactionSerializer(serializers.ModelSerializer):
 
 class ExchangeSerializer(serializers.ModelSerializer):
     converted_value = serializers.FloatField(read_only=True)
+
+    def validate(self, data):
+        id = data.get('sender').id
+        print(id)
+        wallet = get_object_or_404(Wallet, id=id)
+        if wallet.balance - data.get('value') < 0:
+            raise serializers.ValidationError('Balance is too low')
+        return data
 
     class Meta:
         fields = '__all__'

@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Wallet(models.Model):
@@ -10,7 +11,8 @@ class Wallet(models.Model):
     balance = models.FloatField(max_length=200,
                                 verbose_name='Balance',
                                 null=True,
-                                blank=True)
+                                blank=True
+                                )
     currency = models.CharField(max_length=3,
                                 choices=CHOICES,
                                 )
@@ -49,7 +51,9 @@ class Transaction(models.Model):
 
 class Exchange(models.Model):
     value = models.FloatField(max_length=200,
-                              verbose_name='Value')
+                              verbose_name='Value',
+                              validators=[MinValueValidator(0),]
+                              )
     converted_value = models.FloatField(max_length=200,
                                         verbose_name='Converted value',
                                         )
