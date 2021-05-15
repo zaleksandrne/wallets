@@ -11,12 +11,9 @@ from .serializers import (ExchangeSerializer, TransactionSerializer,
                           WalletSerializerRead, WalletSerializerWrite,
                           ProfileSerializer)
 
-from dotenv import load_dotenv
 
-load_dotenv()
-
-APIKEY = os.getenv('APIKEY')
-APIURL = os.getenv('APIURL')
+APIKEY = os.environ.get('APIKEY')
+APIURL = os.environ.get('APIURL')
 
 
 class BaseViewSet(viewsets.GenericViewSet,

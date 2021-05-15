@@ -1,19 +1,12 @@
 import os
-from dotenv import load_dotenv
-
-load_dotenv()
-
-PASSWORD_DB=os.getenv('PASSWORD_DB')
-SECRET_KEY = os.getenv('SECRET_KEY')
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+SECRET_KEY = 'w59&2&1v7!j8(m09q4an3f-v77ihd2__-4)9&bvmnsmk&4)9qy'
 
-
-# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 REST_FRAMEWORK = {
 
@@ -79,12 +72,12 @@ WSGI_APPLICATION = 'wallets.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'wallets_db',
-        'USER' : 'alex',
-        'PASSWORD' : PASSWORD_DB,
-        'HOST' : '127.0.0.1',
-        'PORT' : '5432',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': os.environ.get('DB_NAME'),
+        'USER': os.environ.get('POSTGRES_USER'),
+        'PASSWORD': os.environ.get('POSTGRES_PASSWORD'),
+        'HOST': os.environ.get('DB_HOST'),
+        'PORT': os.environ.get('DB_PORT'),
     }
 }
 
